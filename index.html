@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Scala, just a better Java?</title>
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/hybrid.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+			
+			<style type="text/css">
+			    .reveal .footer {
+			      position: absolute;
+			      width: 100%;
+			      bottom: 1em;
+			      font-size: 0.5em;
+			    }
+
+			    #appDaysLogo{
+			        display:block;
+			        margin:auto;
+			    }
+
+			    #cnjLogo{
+			         position: absolute;
+			         left:20px;
+			    }
+			    </style>
+			
+	</head>
+
+	<body>
+
+						<div class="reveal">
+					
+		
+					
+				
+
+							<!-- Any section element inside of this container is displayed as a slide -->
+							<div class="slides">
+								<section>
+									<h2>Scala 101<br/>
+										first steps with Scala</h2>
+							
+									<p>
+										Treviso Scala Group - 24th september 2015
+									</p>
+								</section>
+							 <section>
+							  <h3>Hello, my name is...</h3>
+							  <p>Giampaolo Trapasso</p>
+							  <p></p>
+							  <p><a href="http://twitter.com/supergiampaolo">@supergiampaolo</a> <br/><small>(there aren't enough heros these days!)</small></p>
+							   <p><a href="http://www.cosenonjaviste.it">cosenonjaviste.it</a> <br/><small>(ask for a sticker!)</small></p>
+							   <p><a href="http://blogzinga.it">blogzinga.it</a><br/><small>(have a blog? do a PR!)</small></p>
+						     </section>
+						
+						
+								<section>
+									<section data-transition="fade">
+									  <h2>Why do we need a new language?</h2>
+								     </section>
+									 <section data-transition="fade">
+									  <img data-src="images/standards1.png">
+								     </section>
+									 <section data-transition="fade">
+									  <img data-src="images/standards2.png">
+								     </section>
+									 <section data-transition="fade">
+									  <img data-src="images/standards.png">
+								     </section>
+					 				<section>
+										<h3>Well..something happened in last 10~15 years</h3>
+										<table>
+											<tbody>
+												<tr>
+													<td>Cores</td>
+													<td>1 → 2 → 4 → ...</td>
+												</tr>
+												<tr>
+													<td>Server nodes</td>
+													<td>1 → 10's → 1000’s.</td>
+												</tr>
+												<tr>
+													<td>Response times</td>
+													<td>seconds →  milliseconds</td>
+												</tr>
+												<tr>
+													<td>Maintenance downtimes</td>
+													<td>hours →  nones</td>
+												</tr>
+												<tr>
+													<td>Data volum</td>
+													<td>GBs → TBs and more</td>
+												</tr>
+											</tbody>
+										</table>
+									</section>
+									<section>
+										<h3>The "rise" of the Functional Programming (FP)</h3>
+										<ul>
+											<li>functions are used as the fundamental building blocks of a program</li>
+											<li>avoids changing-state and mutable data</li>
+											<li>calling a function <em>f</em> twice with the same value for an argument <em>x</em> will produce the same result <i>f(x)</i>
+											<li>easy scaling in and out</li> 
+											<li>many deep interesting concepts that don't fit a life.. ehm.. slide ;)</li>
+										</ul>
+									</section>
+						            <section>   
+										<p>https://youtu.be/DJLDF6qZUX0</p>            
+						                <iframe width="720" height="540" src="http://www.youtube.com/embed/DJLDF6qZUX0"></iframe>
+									</section>
+				                	<section>
+										<h3>A Brief, Incomplete, and Mostly Wrong History of Programming Languages</h3>
+										<blockquote cite="http://james-iry.blogspot.it/2009/05/brief-incomplete-and-mostly-wrong.html">
+												2003 - A drunken Martin Odersky sees a Reese's Peanut Butter Cup ad featuring somebody's peanut butter getting on somebody else's chocolate and has an idea. He creates Scala, a language that unifies constructs from both object oriented and functional languages. This pisses off both groups and each promptly declares jihad.
+										</blockquote>
+									</section>
+							
+									<section>	
+									   <h3>Scala -  <b>Sca</b>lable <b>La</b>nguage</h3>
+											<ul>
+											 <li>blends Object Oriented and Functional Programming</li>
+											 <li>powerful static type system (but feels dynamic)</li>
+											 <li>concise and expressive syntax</li>
+											 <li>compiles to Java byte code and runs on the JVM</li>
+											 <li>interoperable with Java itself (both ways!)</li>
+						
+										 </ul>
+			 							<aside class="notes">
+						 					<p>Scala OO+FP nella misura che voglio, Tre cose JVM, JDK+Librerie+Linguaggio (il più debole</p>
+						 					<p>concisività e semplicità C++->Java->Scala</p>
+						 					<p>Java: verboso, non veramente OOP</p>
+						 					<p>Tre cose JVM, JDK+Librerie+Linguaggio (il più debole)</p>
+			 							</aside>
+						 			</section>
+									<section>	
+										<h3>Another hipster stuff?</h3>
+										<ul>
+											<li>Twitter, LinkedIn, FourSquare, Soundcloud, NASA, ..</li>
+											<li><a href="http://www.quora.com/What-startups-or-tech-companies-are-using-Scala">http://www.quora.com/What-startups-or-tech-companies-are-using-Scala</a></li>								            <li>Functional programming in Scala & Principles of Reactive Programming @ Coursera </li>
+											<li>400K online students</li>
+										</ul>
+									</section>
+									<section>
+										<h3>Another *USA* hipster stuff?</h3>
+										<ul>
+											<li>Lambdacon (Bologna) ~ 280 dev</li>
+											<li>Scala Italy (Milano) ~ 150 + 70</li>
+											<li>Milano Scala Group ~ 570</li>
+											<li>Torino Scala Programming and Big Data Meetup ~ 200</li>
+											<li>G+ Community ~ 90</li>
+										</ul>
+									</section>
+				                </section>
+								<section>
+								<section>
+									<h2>Show me the code<br>"basic features"</h2>
+								</section>
+								<section>
+									<h3>Some feature we'll see/1</h3>
+									<ul>
+									<li>every value is an object</li>
+									<li>functions are "just" objects</li>
+									<li>compiler infer types (static typed)</li>
+									<li>(almost) everything is an expression</li>
+									<li>every operation is a method call</li>
+								</ul>
+								</section>
+								<section>
+									<h3>Some feature we'll see/2</h3>
+									<ul>
+									<li>language is designed to grow</li>
+									<li>collections</li>
+									<li>traits</li>
+									<li>easy singleton</li>
+									<li>every operation is a method call</li>
+								    </ul>
+								</section>
+								<section>
+									<h3>Concise syntax - JavaPizza I</h3>
+									<pre><code data-trim>public class JavaPizza {
+
+  private Boolean tomato = true;
+  private Boolean cheese = true;
+  private Boolean ham = true;
+  private String size = "NORMAL";
+  
+  public JavaPizza(Boolean tomato, Boolean cheese, 
+                   Boolean ham, String size) {
+      this.setTomato(tomato);
+      this.setCheese(cheese);
+      this.setHam(ham);
+      this.setSize(size);
+  }
+  		</code></pre>
+		</section>
+		<section>
+		<h3>Concise syntax - JavaPizza/II</h3>
+		<pre><code data-trim>    public Boolean getTomato() {
+     return tomato;
+  }
+
+  public void setTomato(Boolean tomato) {
+     this.tomato = tomato;
+  }
+
+  public Boolean getCheese() {
+      return cheese;
+  }
+
+  public void setCheese(Boolean cheese) {
+      this.cheese = cheese;
+  }
+		</code></pre>
+		</section>
+		<section>
+		<h3>Concise syntax - JavaPizza/III</h3>
+		<pre><code data-trim>  public Boolean getHam() {
+     return ham;
+  }
+
+  public void setHam(Boolean ham) {
+     this.ham = ham;
+  }
+
+  public String getSize() {
+     return size;
+  }
+
+  public void setSize(String size) {
+        this.size = size;
+  }
+}
+		</code></pre>
+		</section>
+		<section>
+		<h3>Concise syntax - Pizza</h3>
+		<pre><code data-trim>class Pizza(var tomato: Boolean = true, 
+            var cheese: Boolean = true, 
+            var ham: Boolean = true, 
+            var size: String = "NORMAL")
+		</code></pre>
+		<ul>
+		<li>everything is public by default,<br/>use <code>private</code>/<code>protected</code> if needed</li>
+		<li><code>var</code> => something you can change</li>
+		<li><code>val</code> => something final</li>
+		<li>specify defaults if needed</li>
+		<li>types are <b>after</b> parameters</li>
+		<li>setters and getters are generated</li>
+		<li>member variables are private (uniform access principle)</li>
+		<li>no semicolon needed</li>
+		</ul>
+		</section>
+		<section>
+		<h3>Creating and using objects</h3>
+		<pre><code data-trim>val pizza = new Pizza(true, false, true, "HUGE") // type inference
+		</code></pre>
+		<p>is the same as</p>
+		<pre><code data-trim>val pizza : Pizza = new Pizza(true, false, true, "HUGE")</code></pre>
+		<pre><code data-trim>val smallSize = "SMALL" // type inference again
+val newTomato = false // and again
+pizza.size = smallSize
+pizza.tomato =newTomato</code></pre>
+		</section>
+		<section>
+		<h3>Using defaults</h3>
+		<pre><code data-trim>val pizza1 = new Pizza(true, true, false, "NORMAL")
+val pizza2 = new Pizza(true, true)
+val pizza3 = new Pizza(tomato = true, ham = true, size = "HUGE", cheese = true,)
+val pizza4 = new Pizza(size = "SMALL")
+		</code></pre>
+		<ul>
+		<li>if parameters have default, you can omit them on right</li>
+		<li>you can pass parameter using names (without order)</li>
+		<li>you can pass only parameters you want using name, if others have default</li>
+		<li>more on classes:
+			<ul>
+				<li><a href="http://cosenonjaviste.it/creare-una-classe-in-scala">cosenonjaviste.it/creare-una-classe-in-scala/</a></li>
+		</ul>
+		</ul>
+		</section>		
+		<section>
+           <h3>Nobody loves mutable pizzas!</h3>
+           <p>In the following, we'll use only immutable pizzas</p>
+		   <pre><code data-trim>class Pizza(val tomato: Boolean = true, 
+            val cheese: Boolean = true, 
+            val ham: Boolean = true, 
+            val size: String = "NORMAL")
+		</code></pre>
+		<p>Think about how much Java code you saved..</p>
+		</section>
+		<section>
+		<h3>val != var</h3>
+		<pre><code data-trim>var secondPizza = new Pizza(true, true, true, "NORMAL") 
+secondPizza = new Pizza(false, false, true, "HUGE") // will compile
+val thirdPizza = new Pizza(true, false, true, "SMALL")
+thirdPizza = secondPizza // won't compile
+		</code></pre>
+		<ul>
+		<li><code>var</code>: side effect, OOP programming</li>
+		<li><code>val</code>: no side effect, functional programming</li>
+		</ul>
+		</section>	
+		<section>
+		<h3>Defining methods</h3>
+		<pre><code data-trim>class Pizza(val tomato: Boolean = true,
+            val cheese: Boolean = true,
+            val ham: Boolean = true,
+            val size: String = "NORMAL"){
+
+  def slice(numberOfPieces: Int): Unit = {
+    println(s"Pizza is in ${numberOfPieces} pieces")
+  }
+
+}</code></pre>
+		<p>
+		<ul>
+			<li>a method starts with a <code>def</code></li>
+			<li>return type is optional (with a little exception)</li>
+			<li><code>Unit</code> ~ <code>void</code> in Java</li>	
+			<li><code>return</code> keyword is optional, last expression will be returned</li>
+			<li>where's the constructor?</li>
+			<li>plus: string interpolation</li>
+		</ul>
+		</p>
+		</section>	
+		<section>
+		<h3>Singletons/I</h3>
+		<pre><code data-trim>object Oven {
+  def cook(pizza: Pizza): Unit = {
+     println(s"Pizza $pizza is cooking")
+     Thread.sleep(1000)
+     println("Pizza is ready")
+  }
+}</code></pre>
+		<ul>
+		<li>a singleton uses the <code>object</code> keyword</li>
+		<li>pattern provided by the language</li>
+		<li>Scala is more OO than Java, no <code>static</code>
+		<li>plus: a Java class used inside Scala</li>	
+		</ul>
+		</section>	
+
+		<section>
+		<h3>Singletons/II</h3>
+		<pre><code data-trim>object Margherita extends Pizza(true, false, false, "NORMAL") {
+    override def toString = "Pizza Margherita"
+}
+		</code></pre>
+		<pre><code data-trim>Oven.cook(Margherita)</code></pre>
+		<ul>
+		<li>objects can extend classes</li>
+		<li>every overridden method must use <code>override</code> keyword</li>
+		</ul>
+		</section>
+		<section>
+			<h3>Case classes</h3>
+		<pre><code data-trim>  case class Pizza(val tomato: Boolean = true,
+                 val cheese: Boolean = true,
+                 val ham: Boolean = true,
+                 val size: String = "NORMAL") {
+
+    def slice(numberOfPieces: Int): Unit = {
+      println(s"Pizza is in ${numberOfPieces} pieces")
+    }
+}
+
+val p1 = Pizza.apply(cheese = false) // not idiomatic
+val p2 = Pizza(cheese = false) 
+// the same as val p = new Pizza(cheese = false)</pre></code>
+		<ul>
+			<li>syntactic sugar, but super useful and used</li>
+			<li>every parameter is immutable</li>
+			<li>a companion object is created</li>
+			<li>factory, pattern matching, hashCode, toString</li>
+			<li>more on <a href="http://www.cosenonjaviste.it/scala-le-case-class/">http://cosenonjaviste.it/scala-le-case-class/</a></li>
+		</ul>
+		</section>
+		<section>
+		<h3>Inheritance/I</h3>
+		<pre><code data-trim>abstract class Worker(val name: String){
+  def greet : String // this is abstract
+}
+
+trait PizzaMaker{
+  def preparePizza(pizza: Pizza) = println(s"I prepare ${pizza}")
+}
+
+trait Waiter{
+  def servePizza(pizza: Pizza) = println(s"this is your ${pizza}")
+}
+
+class Handyman(override val name: String, val wage: Int) 
+     extends Worker(name) with PizzaMaker with Waiter {
+  override def greet: String = s"Hello, I'm ${name}" 
+}</code></pre>
+		</section>
+		<section>
+		<h3>Inheritance/II</h3>
+		<pre><code data-trim>val vito = new Handyman("Vito", 1000)
+println(vito.greet)
+vito.preparePizza(Margherita)
+vito.servePizza(Margherita)
+		</code></pre>
+		<ul>
+		<li>a class can inherite only one other class</li>
+		<li>trait ~ Java 8 interface but have also states</li>
+		<li>a trait can extends another one or a class</li>
+		<li>a class can mix-in many traits</li>
+		<li>trait linearization resolves the diamond problem (mostly)</li>
+		</ul>
+		</section>
+		<section>
+        <h3>Inheritance/III</h3>
+<pre><code data-trim>abstract class Worker(val name: String){
+  def greet : String // this is abstract
+}
+
+trait PizzaMaker extends Worker{
+  def preparePizza(pizza: Pizza) = println(s"I prepare ${pizza}")
+  override def greet = "Hello"
+}
+
+trait Waiter extends Worker {
+  def servePizza(pizza: Pizza) = println(s"this is your ${pizza}")
+  override def greet = "How can I serve you?"
+}
+
+class Handyman(override val name: String, val wage: Int) 
+  extends Worker(name) with  Waiter with PizzaMaker
+</code></pre>
+		</section>	
+		<section>
+        <h3>Inheritance/IV</h3>
+<pre><code data-trim>abstract class Worker(val name: String){
+  def greet : String // this is abstract
+}
+
+trait PizzaMaker {
+  def preparePizza(pizza: Pizza) = println(s"I prepare ${pizza}")
+  def greet = "Hello"
+}
+
+trait Waiter {
+  def servePizza(pizza: Pizza) = println(s"this is your ${pizza}")
+  def greet = "How can I serve you?"
+}
+
+class Handyman(override val name: String, val wage: Int) extends Worker(name) with  Waiter with PizzaMaker  {
+  override def greet = super[Waiter].greet
+}</code></pre>
+		</section>
+<section>
+        <h3>Inheritance/V (Compile error!)</h3>
+        <pre><code data-trim>abstract class Worker(val name: String){
+  def greet : String // this is abstract
+}
+
+class Intern
+
+trait PizzaMaker extends Intern {
+  def greet = "Hello"
+}
+
+trait Waiter {
+  def greet = "How can I serve you?"
+}
+
+class Handyman(override val name: String, val wage: Int) 
+  extends Worker(name) with  Waiter with PizzaMaker</pre></code>
+	</section>
+	</section>
+		<section>
+		  <section>
+		     <h2>Show me the code<br>"advanced features"</h2>
+		   </section>
+		   <section>
+			   <h3>Pattern matching/I</h3>
+
+		<pre><code data-trim>object Pino {
+
+  def comment(pizza: Pizza) =
+    pizza match {
+      case Pizza(tomato, cheese, ham, size) if size == "HUGE" => "Wow!"
+      case Pizza(false, cheese, ham, size) =>
+        s"No tomato on this ${size} pizza"
+      case Pizza(_, _, _, "SMALL") =>
+        "Little champion, your pizza is coming"
+      case pizza@Margherita =>
+        s"I like your ${pizza.size} Margherita"
+      case _ => "OK"
+    }
+
+}</code></pre></section>
+		<section>
+		<h3>Pattern matching/II</h3>
+		<ul>
+		<li>a super flexible Java <code>switch</code> (but very different in nature)</li>
+		<li>in love with case classes, but possible on every class</li>
+		<li>can match partial definition of objects</li>
+		<li>can match types</li>
+		<li><code>_</code> is a wildcard</li>	
+		</ul>
+		</section>	
+		<section>
+		<h3>Working with collections and functions/I</h3>
+		<pre><code data-trim>val order: List[Pizza] = List(pizza1, pizza2, pizza3, pizza4)
+
+val noTomato: (Pizza => Boolean) = (p => p.tomato == false)
+
+order
+  .filter(noTomato)
+  .filter(p => p.ham == true)
+  .map(pizza => Pino.comment(pizza))
+  .map(println)
+		</code></pre>
+		</section>
+		<section>
+		<h3>Working with collections and functions/II</h3>
+		<ul>
+			<li>easy to create a collection</li>
+			<li>functions are objects, you can pass them around</li>
+			<li>high order functions</li>
+			<li>you can use methods as functions</li>
+			<li>filter, map, fold and all the rest</li>
+		</ul>
+		</section>
+		<section><h3>Tuples</h3>
+<pre><code data-trim>val bigOrder: (Pizza, Int) = (Pizza(ham = true), 7)
+
+val howMany: Int = bigOrder._2
+// bigOrder._2 = 4 //don't compile, tuple is immutable
+val newBigOrder = bigOrder.copy(_2 = 4)
+
+val number = List(3, 4, 2, 1)
+val hugeOrder: List[(Pizza, Int)] = order.zip(number) 
+//List((Pizza(true,true,false,NORMAL),3), (Pizza(true,true,true,NORMAL),4)...
+
+val hugeOrder2 = hugeOrder.map(t => t.swap)
+</code></pre>
+<ul>
+			<li>to create a tuple, just open a parenthesis</li>
+			<li>tuples are immutable</li>
+			<li><code>zip</code> creates tuple</li>
+		</ul>
+		</section>
+		<section>
+			<h3>Operators are just methods (an example)</h3>
+		<pre><code data-trim>case class Pizza(tomato: Boolean = true, cheese: Boolean = true, 
+                 ham: Boolean = true, size: String = "NORMAL"){
+
+  def slice(numberOfPieces: Int) = 
+     s"Pizza is in ${numberOfPieces} pieces"
+
+  def /(numberOfPieces: Int) = slice(numberOfPieces)
+}
+		</code></pre>
+		<pre><code data-trim>val pizza = Pizza()
+pizza.slice(4)
+pizza./(4)
+pizza / 4</code></pre>
+		<p>Simple rules to simplify syntax (towards DSL)</p>
+		</section>
+		<section>
+			<h3>Implicit conversions/I</h3>
+		<pre><code data-trim>class MargheritaList(val n: Int) {
+
+  def margheritas = {
+    var list: List[Pizza] = List()
+    for (i <- 1 to n)
+      list = list :+ Margherita
+    list
+  }
+}
+		</code></pre><ul>
+		<li>using a <code>var</code> with an immutable list</li>
+		<li>note the generics</li>
+		<li>using collection operator <code>:+</code>
+		<li><code>List.fill(n)(Margherita)</code> is more idiomatic</li>
+		<li>you choose how much functional you want to be</li>
+		</section>
+<section>
+	<h3>Implicit conversions/II</h3>
+<pre><code data-trim>val order = new MargheritaList(4).margheritas()</code></pre>
+<p>a bit verbose..let's introduce a implicit conversion</p>
+<pre><code data-trim>implicit def fromIntToMargherita(n: Int) = new MargheritaList(n)</code></pre>
+<p>compiler implicity does conversion for us</p>
+<pre><code data-trim>val order = 4.margheritas</code></pre>
+<p>or better</p>
+<pre><code data-trim>
+val order = 4 margheritas</code></pre>
+<p><small>Hint: use <code>import scala.language.implicitConversions</code> and <code>import scala.language.postfixOps</code> to get rid of warning or to raise attention</small></p>
+</section>
+<section>
+	<h3>A Pizza DSL</h3>
+<pre><code data-trim>val pizza = Margherita
+Pino commentPizza pizza
+Oven cook pizza
+pizza / 6
+</code></pre>
+<p>Question. How much keywords do you see?</p>
+</section>
+
+<section>
+	<h3>For comprehension/I</h3>
+	<p>Let's change <code>slice</code> definition</p>
+<pre><code data-trim>case class Slice(val p: Pizza, val fractions: Int) { 
+  override def toString = s"1/$fractions of $p"
+}
+	
+case class Pizza(val tomato: Boolean = true,
+                 val cheese: Boolean = true,
+                 val ham: Boolean = true,
+                 val size: String = "NORMAL") {
+
+  def slice(n: Int): List[Slice] = List.fill(n)(Slice(this, n))
+}</code></pre>
+</section>
+<section>
+	<h3>For comprehension/II</h3>
+<pre><code data-trim>val order = List(Pizza(), Pizza(ham = false))</code></pre>
+<p>How to get the list of every slice description?</p>
+<pre><code data-trim>val list = order.map(p => p.slice(4)) // List[List[Slice]] is wrong
+
+val slices = order.flatMap(p => p.slice(4)) // List[Slice]
+val descriptions = listOfSlices.map(slice => slice.toString)
+</code></pre>
+<p>or</p>
+<pre><code data-trim>val descriptions = order.flatMap(p => p.slice(4)).map(slice => slice.toString)</code></pre>
+</section>
+<section>
+	<h3>For comprehension/III</h3>
+	<p>For comprehension may be more readable</p>
+	<pre><code data-trim>val descriptions = for { pizza <- order
+                         slice <- pizza.slice(4)
+                       } yield slice.toString</code></pre>
+                            <p>than</p>
+    <pre><code data-trim>val descriptions = order.flatMap(p => p.slice(4)).map(slice => slice.toString)</code></pre>
+<ul>
+  <li>for comprehension is different from for loop (no <code>yield</code>)
+  	<li>is purely syntactic sugar</li>
+  </ul>
+</section>
+
+
+
+		
+
+
+
+
+
+
+		<!--
+		<section>
+		<h3>--title--</h3>
+		<pre><code data-trim>--code---
+		</code></pre>
+		<ul>
+		<li>--something</li>
+		</ul>
+		</section>	
+
+
+  
+			
+				-->					
+						
+					
+								<section style="text-align: left;">
+									<h2>The end</h2>
+									<p>Q & Option[A]</p>
+									<p>Thanks for following, slides and code on <a https://github.com/giampaolotrapasso/>https://github.com/giampaolotrapasso/</p>
+								</section>
+
+							
+
+
+							</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
