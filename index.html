@@ -199,7 +199,6 @@
 									<li>collections</li>
 									<li>traits</li>
 									<li>easy singleton</li>
-									<li>every operation is a method call</li>
 								    </ul>
 								</section>
 								<section>
@@ -381,10 +380,10 @@ thirdPizza = secondPizza // won't compile
 		</section>
 		<section>
 			<h3>Case classes</h3>
-		<pre><code data-trim>  case class Pizza(val tomato: Boolean = true,
-                 val cheese: Boolean = true,
-                 val ham: Boolean = true,
-                 val size: String = "NORMAL") {
+		<pre><code data-trim>  case class Pizza(tomato: Boolean = true,
+                 cheese: Boolean = true,
+                 ham: Boolean = true,
+                 size: String = "NORMAL") {
 
     def slice(numberOfPieces: Int): Unit = {
       println(s"Pizza is in ${numberOfPieces} pieces")
@@ -430,14 +429,14 @@ vito.servePizza(Margherita)
 		</code></pre>
 		<ul>
 		<li>a class can inherite only one other class</li>
-		<li>trait ~ Java 8 interface but have also states</li>
-		<li>a trait can extends another one or a class</li>
 		<li>a class can mix-in many traits</li>
+		<li>a trait can extends another one or a class</li>
+		<li>trait ~ Java 8 interface but have also states</li>
 		<li>trait linearization resolves the diamond problem (mostly)</li>
 		</ul>
 		</section>
 		<section>
-        <h3>Inheritance/III</h3>
+        <h3>Inheritance/III (diamond)</h3>
 <pre><code data-trim>abstract class Worker(val name: String){
   def greet : String // this is abstract
 }
@@ -630,14 +629,14 @@ pizza / 6
 <section>
 	<h3>For comprehension/I</h3>
 	<p>Let's change <code>slice</code> definition</p>
-<pre><code data-trim>case class Slice(val p: Pizza, val fractions: Int) { 
+<pre><code data-trim>case class Slice(p: Pizza, fractions: Int) { 
   override def toString = s"1/$fractions of $p"
 }
 	
-case class Pizza(val tomato: Boolean = true,
-                 val cheese: Boolean = true,
-                 val ham: Boolean = true,
-                 val size: String = "NORMAL") {
+case class Pizza(tomato: Boolean = true,
+                 cheese: Boolean = true,
+                 ham: Boolean = true,
+                 size: String = "NORMAL") {
 
   def slice(n: Int): List[Slice] = List.fill(n)(Slice(this, n))
 }</code></pre>
@@ -667,7 +666,82 @@ val descriptions = listOfSlices.map(slice => slice.toString)
   	<li>is purely syntactic sugar</li>
   </ul>
 </section>
+<section>
+	<h3>Option/I</h3>
+	<ul>
+		<li><code>null</code> the billion dollar mistake</li>
+		<li>Scala uses <code>Option[T]</code> a trait that encodes presence/absence of values</li>
+		<li><code>None</code> if there is no value, <code>Some</code> if there some value like <code>Some(42)</code></li>
+	</ul>
+	<pre><code data-trim>object TheLazyPizzaMaker {
+  def prepare(p: Pizza): Option[Pizza] =
+    if (Random.nextInt(6) == 0) None
+      else Some(p)
+ }</code></pre>
+</section>
+<section>
+	<h3>Option/II</h3>
+	<p>pattern matching to handle an <code>Option</code></p>
+<pre><code data-trim>val result = TheLazyPizzaMaker.prepare(Margherita)
 
+result match {
+  case Some(p) => "My pizza is ready"
+  case None => "Fire that pizza maker!"
+}</code></pre>	
+<p>option as a list with at most one value</p>
+<pre><code data-trim>result.map(o => "My pizza is ready").getOrElse("Fire that pizza maker!")</pre></code>
+<p><code>null</code> for Java interoperability</p>
+	</section>
+
+	<section>
+		<h3>Implicit parameters/I</h3>
+		<pre><code data-trim>object Pasquale {
+  def prepare(p: Pizza) = s"I prepare you pizza $p"
+  def receiveOrder(p: Pizza) = s"You ordered me $p"
+  def serve(p: Pizza) = s"Here is your pizza $p"
+  def receivePayment(p: Pizza, tip: Int) = s"Thanks for paying $p and for the $tip $$"
+}</pre></code>
+<pre><code data-trim>val p = new Pizza(tomato = false)
+Pasquale.receiveOrder(p)
+Pasquale.prepare(p)
+Pasquale.serve(p)
+Pasquale.receivePayment(p, tip = 3)</pre></code>
+	</section>
+	
+	<section>
+		<h3>Implicit parameters/II</h3>
+		
+		<ul>
+			<li>what's wrong with the previous code?</li>
+		    <li><code>p</code> is something like a context (think to a DB connection)</li>
+		    <li>implicit parameters solve this kind of problem</li>
+		    </ul>
+<pre><code data-trim>object Pasquale {
+  def prepare(implicit p: Pizza) = s"I prepare you pizza $p"
+  def receiveOrder(implicit p: Pizza) = s"You ordered me $p"
+  def serve(implicit p: Pizza) = s"Here is your pizza $p"
+  def receivePayment(tip: Int)(implicit p: Pizza) = s"Thanks for paying $p and for the $tip $$ "
+}</pre></code>
+		    
+
+
+		</section>
+		<section>
+		<h3>Implicit parameters/III</h3>
+		<pre><code data-trim>implicit val p = new Pizza(tomato = false)
+Pasquale.receiveOrder(p)
+Pasquale.prepare
+Pasquale.serve
+Pasquale.receivePayment(tip = 3)
+</pre></code>
+<ul>
+	<li>a implicit parameter has nothing special, if you pass it to method</li>
+	<li>if it's not provided, compiler will try to find one in scope</li>
+	<li>if none in scope or more that one, won't compile</li>
+	<li>resolution rules are not so easy, it worth a talk (and actually there's one)</li>
+	</ul>
+		</section>
+</section>
 
 
 		
@@ -692,12 +766,13 @@ val descriptions = listOfSlices.map(slice => slice.toString)
 			
 				-->					
 						
-					
+					<section>
 								<section style="text-align: left;">
 									<h2>The end</h2>
 									<p>Q & Option[A]</p>
 									<p>Thanks for following, slides and code on <a https://github.com/giampaolotrapasso/>https://github.com/giampaolotrapasso/</p>
 								</section>
+							</section>
 
 							
 
