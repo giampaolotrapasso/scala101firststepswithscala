@@ -131,7 +131,7 @@
 											<li>many deep interesting concepts that don't fit a life.. ehm.. slide ;)</li>
 										</ul>
 									</section>
-						            <section>   
+						            <!--section>   
 										<p>https://youtu.be/DJLDF6qZUX0</p>            
 						                <iframe width="720" height="540" src="http://www.youtube.com/embed/DJLDF6qZUX0"></iframe>
 									</section>
@@ -140,7 +140,7 @@
 										<blockquote cite="http://james-iry.blogspot.it/2009/05/brief-incomplete-and-mostly-wrong.html">
 												2003 - A drunken Martin Odersky sees a Reese's Peanut Butter Cup ad featuring somebody's peanut butter getting on somebody else's chocolate and has an idea. He creates Scala, a language that unifies constructs from both object oriented and functional languages. This pisses off both groups and each promptly declares jihad.
 										</blockquote>
-									</section>
+									</section-->
 							
 									<section>	
 									   <h3>Scala -  <b>Sca</b>lable <b>La</b>nguage</h3>
@@ -284,8 +284,9 @@
 		<pre><code data-trim>val pizza : Pizza = new Pizza(true, false, true, "HUGE")</code></pre>
 		<pre><code data-trim>val smallSize = "SMALL" // type inference again
 val newTomato = false // and again
+val newSize : String = "HUGE"
 pizza.size = smallSize
-pizza.tomato =newTomato</code></pre>
+pizza.tomato = newTomato</code></pre>
 		</section>
 		<section>
 		<h3>Using defaults</h3>
@@ -432,7 +433,7 @@ vito.servePizza(Margherita)
 		<li>a class can mix-in many traits</li>
 		<li>a trait can extends another one or a class</li>
 		<li>trait ~ Java 8 interface but have also states</li>
-		<li>trait linearization resolves the diamond problem (mostly)</li>
+		<li>trait linearization resolves the diamond problem</li>
 		</ul>
 		</section>
 		<section>
@@ -454,6 +455,7 @@ trait Waiter extends Worker {
 class Handyman(override val name: String, val wage: Int) 
   extends Worker(name) with  Waiter with PizzaMaker
 </code></pre>
+<p>What will print <code>vito.greet</code>?</p>
 		</section>	
 		<section>
         <h3>Inheritance/IV</h3>
@@ -487,7 +489,7 @@ trait PizzaMaker extends Intern {
   def greet = "Hello"
 }
 
-trait Waiter {
+trait Waiter extends Worker{
   def greet = "How can I serve you?"
 }
 
@@ -524,7 +526,7 @@ class Handyman(override val name: String, val wage: Int)
 		<li>in love with case classes, but possible on every class</li>
 		<li>can match partial definition of objects</li>
 		<li>can match types</li>
-		<li><code>_</code> is a wildcard</li>	
+		<li><code>_</code> is a wildcard (can throw <code>scala.MatchError</code> without)</li>	
 		</ul>
 		</section>	
 		<section>
