@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Scala, just a better Java?</title>
+		<title>Scala101, first steps with Scala</title>
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
 
@@ -297,7 +297,7 @@ val pizza4 = new Pizza(size = "SMALL")
 		</code></pre>
 		<ul>
 		<li>if parameters have default, you can omit them on right</li>
-		<li>you can pass parameter using names (without order)</li>
+		<li>you can pass parameters using names (without order)</li>
 		<li>you can pass only parameters you want using name, if others have default</li>
 		<li>more on classes:
 			<ul>
@@ -345,8 +345,9 @@ thirdPizza = secondPizza // won't compile
 			<li>return type is optional (with a little exception)</li>
 			<li><code>Unit</code> ~ <code>void</code> in Java</li>	
 			<li><code>return</code> keyword is optional, last expression will be returned</li>
+			<li><code>s</code> the string interpolation</li>
 			<li>where's the constructor?</li>
-			<li>plus: string interpolation</li>
+			
 		</ul>
 		</p>
 		</section>	
@@ -369,7 +370,7 @@ thirdPizza = secondPizza // won't compile
 
 		<section>
 		<h3>Singletons/II</h3>
-		<pre><code data-trim>object Margherita extends Pizza(true, false, false, "NORMAL") {
+		<pre><code data-trim>object Margherita extends Pizza(true, true, false, "NORMAL") {
     override def toString = "Pizza Margherita"
 }
 		</code></pre>
@@ -398,7 +399,7 @@ val p2 = Pizza(cheese = false)
 			<li>syntactic sugar, but super useful and used</li>
 			<li>every parameter is immutable</li>
 			<li>a companion object is created</li>
-			<li>factory, pattern matching, hashCode, toString</li>
+			<li>factory, pattern matching, hashCode, equals, toString</li>
 			<li>more on <a href="http://www.cosenonjaviste.it/scala-le-case-class/">http://cosenonjaviste.it/scala-le-case-class/</a></li>
 		</ul>
 		</section>
@@ -429,7 +430,7 @@ vito.preparePizza(Margherita)
 vito.servePizza(Margherita)
 		</code></pre>
 		<ul>
-		<li>a class can inherite only one other class</li>
+		<li>a class can inherit from only one other class</li>
 		<li>a class can mix-in many traits</li>
 		<li>a trait can extends another one or a class</li>
 		<li>trait ~ Java 8 interface but have also states</li>
@@ -508,7 +509,7 @@ class Handyman(override val name: String, val wage: Int)
 
   def comment(pizza: Pizza) =
     pizza match {
-      case Pizza(tomato, cheese, ham, size) if size == "HUGE" => "Wow!"
+      case Pizza(t, c, h, s) if size == "HUGE" => "Wow!"
       case Pizza(false, cheese, ham, size) =>
         s"No tomato on this ${size} pizza"
       case Pizza(_, _, _, "SMALL") =>
@@ -772,7 +773,7 @@ Pasquale.receivePayment(tip = 3)
 								<section style="text-align: left;">
 									<h2>The end</h2>
 									<p>Q & Option[A]</p>
-									<p>Thanks for following, slides and code on <a https://github.com/giampaolotrapasso/>https://github.com/giampaolotrapasso/</p>
+									<p>Thanks for following, slides and code on <a https://github.com/giampaolotrapasso/>https://github.com/giampaolotrapasso/</p>, Twitter or LinkedIn
 								</section>
 							</section>
 
