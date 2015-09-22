@@ -509,7 +509,7 @@ class Handyman(override val name: String, val wage: Int)
 
   def comment(pizza: Pizza) =
     pizza match {
-      case Pizza(t, c, h, s) if size == "HUGE" => "Wow!"
+      case Pizza(t, c, h, s) => if (s == "HUGE") "Wow!" 
       case Pizza(false, cheese, ham, size) =>
         s"No tomato on this ${size} pizza"
       case Pizza(_, _, _, "SMALL") =>
@@ -518,7 +518,6 @@ class Handyman(override val name: String, val wage: Int)
         s"I like your ${pizza.size} Margherita"
       case _ => "OK"
     }
-
 }</code></pre></section>
 		<section>
 		<h3>Pattern matching/II</h3>
@@ -540,7 +539,6 @@ order
   .filter(noTomato)
   .filter(p => p.ham == true)
   .map(pizza => Pino.comment(pizza))
-  .map(println)
 		</code></pre>
 		</section>
 		<section>
