@@ -199,6 +199,7 @@
 									<li>collections</li>
 									<li>traits</li>
 									<li>easy singleton</li>
+									<li>no checked exception (won't see)</li>
 								    </ul>
 								</section>
 								<section>
@@ -315,7 +316,7 @@ val pizza4 = new Pizza(size = "SMALL")
 		</code></pre>
 		<p>Think about how much Java code you saved..</p>
 		</section>
-		<section>
+		<!--section>
 		<h3>val != var</h3>
 		<pre><code data-trim>var secondPizza = new Pizza(true, true, true, "NORMAL") 
 secondPizza = new Pizza(false, false, true, "HUGE") // will compile
@@ -326,7 +327,7 @@ thirdPizza = secondPizza // won't compile
 		<li><code>var</code>: side effect, OOP programming</li>
 		<li><code>val</code>: no side effect, functional programming</li>
 		</ul>
-		</section>	
+		</section-->	
 		<section>
 		<h3>Defining methods</h3>
 		<pre><code data-trim>class Pizza(val tomato: Boolean = true,
@@ -552,25 +553,6 @@ order
 			<li>filter, map, fold and all the rest</li>
 		</ul>
 		</section>
-		<section><h3>Tuples</h3>
-<pre><code data-trim>val bigOrder: (Pizza, Int) = (Pizza(ham = true), 7)
-
-val howMany: Int = bigOrder._2
-// bigOrder._2 = 4 //don't compile, tuple is immutable
-val newBigOrder = bigOrder.copy(_2 = 4)
-
-val number = List(3, 4, 2, 1)
-val hugeOrder: List[(Pizza, Int)] = order.zip(number) 
-//List((Pizza(true,true,false,NORMAL),3), (Pizza(true,true,true,NORMAL),4)...
-
-val hugeOrder2 = hugeOrder.map(t => t.swap)
-</code></pre>
-<ul>
-			<li>to create a tuple, just open a parenthesis</li>
-			<li>tuples are immutable</li>
-			<li><code>zip</code> creates tuple</li>
-		</ul>
-		</section>
 		<section>
 			<h3>Operators are just methods (an example)</h3>
 		<pre><code data-trim>case class Pizza(tomato: Boolean = true, cheese: Boolean = true, 
@@ -586,53 +568,16 @@ val hugeOrder2 = hugeOrder.map(t => t.swap)
 pizza.slice(4)
 pizza./(4)
 pizza / 4</code></pre>
-		<p>Simple rules to simplify syntax (towards DSL)</p>
+		<p>Simple rules to simplify syntax</p>
 		</section>
-		<section>
-			<h3>Implicit conversions/I</h3>
-		<pre><code data-trim>class MargheritaList(val n: Int) {
-
-  def margheritas = {
-    var list: List[Pizza] = List()
-    for (i <- 1 to n)
-      list = list :+ Margherita
-    list
-  }
-}
-		</code></pre><ul>
-		<li>using a <code>var</code> with an immutable list</li>
-		<li>note the generics</li>
-		<li>using collection operator <code>:+</code>
-		<li><code>List.fill(n)(Margherita)</code> is more idiomatic</li>
-		<li>you choose how much functional you want to be</li>
-		</section>
-<section>
-	<h3>Implicit conversions/II</h3>
-<pre><code data-trim>val order = new MargheritaList(4).margheritas()</code></pre>
-<p>a bit verbose..let's introduce a implicit conversion</p>
-<pre><code data-trim>implicit def fromIntToMargherita(n: Int) = new MargheritaList(n)</code></pre>
-<p>compiler implicity does conversion for us</p>
-<pre><code data-trim>val order = 4.margheritas</code></pre>
-<p>or better</p>
-<pre><code data-trim>
-val order = 4 margheritas</code></pre>
-<p><small>Hint: use <code>import scala.language.implicitConversions</code> and <code>import scala.language.postfixOps</code> to get rid of warning or to raise attention</small></p>
-</section>
-<section>
-	<h3>A Pizza DSL</h3>
-<pre><code data-trim>val pizza = Margherita
-Pino commentPizza pizza
-Oven cook pizza
-pizza / 6
-</code></pre>
-<p>Question. How much keywords do you see?</p>
-</section>
+		
 <section>
 	<h3>Option/I</h3>
 	<ul>
 		<li><code>null</code> the billion dollar mistake</li>
 		<li>Scala uses <code>Option[T]</code> a trait that encodes presence/absence of values</li>
 		<li><code>None</code> if there is no value, <code>Some</code> if there some value like <code>Some(42)</code></li>
+		<li>caller if forced to handle the case</li>
 	</ul>
 	<pre><code data-trim>object TheLazyPizzaMaker {
   def prepare(p: Pizza): Option[Pizza] =
@@ -653,6 +598,64 @@ result match {
 <pre><code data-trim>result.map(o => "My pizza is ready").getOrElse("Fire that pizza maker!")</pre></code>
 <p><code>null</code> for Java interoperability</p>
 	</section>
+	<section><h3>Tuples</h3>
+<pre><code data-trim>val bigOrder: (Pizza, Int) = (Pizza(ham = true), 7)
+
+val howMany: Int = bigOrder._2
+// bigOrder._2 = 4 //don't compile, tuple is immutable
+val newBigOrder = bigOrder.copy(_2 = 4)
+
+val number = List(3, 4, 2, 1)
+val hugeOrder: List[(Pizza, Int)] = order.zip(number) 
+//List((Pizza(true,true,false,NORMAL),3), (Pizza(true,true,true,NORMAL),4)...
+
+val hugeOrder2 = hugeOrder.map(t => t.swap)
+</code></pre>
+<ul>
+			<li>to create a tuple, just open a parenthesis</li>
+			<li>tuples are immutable</li>
+			<li><code>zip</code> creates tuple</li>
+		</ul>
+		</section>
+	<section>
+			<h3>Implicit conversions/I</h3>
+		<pre><code data-trim>class MargheritaList(val n: Int) {
+
+  def margherita = {
+    var list: List[Pizza] = List()
+    for (i <- 1 to n)
+      list = list :+ Margherita
+    list
+  }
+}
+		</code></pre><ul>
+		<li>using a <code>var</code> with an immutable list</li>
+		<li>note the generics</li>
+		<li>using collection operator <code>:+</code>
+		<li><code>List.fill(n)(Margherita)</code> is more idiomatic</li>
+		<li>you choose how much functional you want to be</li>
+		</section>
+<section>
+	<h3>Implicit conversions/II</h3>
+<pre><code data-trim>val order = new MargheritaList(4).margherita()</code></pre>
+<p>a bit verbose..let's introduce a implicit conversion</p>
+<pre><code data-trim>implicit def fromIntToMargherita(n: Int) = new MargheritaList(n)</code></pre>
+<p>compiler implicity does conversion for us</p>
+<pre><code data-trim>val order = 4.margherita</code></pre>
+<p>or better</p>
+<pre><code data-trim>
+val order = 4 margherita</code></pre>
+<p><small>Hint: use <code>import scala.language.implicitConversions</code> and <code>import scala.language.postfixOps</code> to get rid of warning or to raise attention</small></p>
+</section>
+<section>
+	<h3>A Pizza DSL</h3>
+<pre><code data-trim>val pizza = Margherita
+Pino commentPizza pizza
+Oven cook pizza
+pizza / 6
+</code></pre>
+<p>Question. How much keywords do you see?</p>
+</section>
 <section>
 	<h3>For comprehension/I</h3>
 	<p>Let's change <code>slice</code> definition</p>
