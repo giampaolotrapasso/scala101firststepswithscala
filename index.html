@@ -509,16 +509,17 @@ class Handyman(override val name: String, val wage: Int)
 
   def comment(pizza: Pizza) =
     pizza match {
-      case Pizza(t, c, h, s) => if (s == "HUGE") "Wow!" 
+      case Pizza(t, c, h, s) if (s == "HUGE") => "Wow!" 
       case Pizza(false, cheese, ham, size) =>
         s"No tomato on this ${size} pizza"
-      case Pizza(_, _, _, "SMALL") =>
-        "Little champion, your pizza is coming"
+      case Pizza(false, _, _, "SMALL") =>
+        "Little champion, your white pizza is coming"
       case pizza@Margherita =>
         s"I like your ${pizza.size} Margherita"
       case _ => "OK"
     }
-}</code></pre></section>
+}</code></pre>
+<p>third case won't fire, why?</p></section>
 		<section>
 		<h3>Pattern matching/II</h3>
 		<ul>
@@ -626,7 +627,32 @@ pizza / 6
 </code></pre>
 <p>Question. How much keywords do you see?</p>
 </section>
+<section>
+	<h3>Option/I</h3>
+	<ul>
+		<li><code>null</code> the billion dollar mistake</li>
+		<li>Scala uses <code>Option[T]</code> a trait that encodes presence/absence of values</li>
+		<li><code>None</code> if there is no value, <code>Some</code> if there some value like <code>Some(42)</code></li>
+	</ul>
+	<pre><code data-trim>object TheLazyPizzaMaker {
+  def prepare(p: Pizza): Option[Pizza] =
+    if (Random.nextInt(6) == 0) None
+      else Some(p)
+ }</code></pre>
+</section>
+<section>
+	<h3>Option/II</h3>
+	<p>pattern matching to handle an <code>Option</code></p>
+<pre><code data-trim>val result = TheLazyPizzaMaker.prepare(Margherita)
 
+result match {
+  case Some(p) => "My pizza is ready"
+  case None => "Fire that pizza maker!"
+}</code></pre>	
+<p>option as a list with at most one value</p>
+<pre><code data-trim>result.map(o => "My pizza is ready").getOrElse("Fire that pizza maker!")</pre></code>
+<p><code>null</code> for Java interoperability</p>
+	</section>
 <section>
 	<h3>For comprehension/I</h3>
 	<p>Let's change <code>slice</code> definition</p>
@@ -667,33 +693,6 @@ val descriptions = listOfSlices.map(slice => slice.toString)
   	<li>is purely syntactic sugar</li>
   </ul>
 </section>
-<section>
-	<h3>Option/I</h3>
-	<ul>
-		<li><code>null</code> the billion dollar mistake</li>
-		<li>Scala uses <code>Option[T]</code> a trait that encodes presence/absence of values</li>
-		<li><code>None</code> if there is no value, <code>Some</code> if there some value like <code>Some(42)</code></li>
-	</ul>
-	<pre><code data-trim>object TheLazyPizzaMaker {
-  def prepare(p: Pizza): Option[Pizza] =
-    if (Random.nextInt(6) == 0) None
-      else Some(p)
- }</code></pre>
-</section>
-<section>
-	<h3>Option/II</h3>
-	<p>pattern matching to handle an <code>Option</code></p>
-<pre><code data-trim>val result = TheLazyPizzaMaker.prepare(Margherita)
-
-result match {
-  case Some(p) => "My pizza is ready"
-  case None => "Fire that pizza maker!"
-}</code></pre>	
-<p>option as a list with at most one value</p>
-<pre><code data-trim>result.map(o => "My pizza is ready").getOrElse("Fire that pizza maker!")</pre></code>
-<p><code>null</code> for Java interoperability</p>
-	</section>
-
 	<section>
 		<h3>Implicit parameters/I</h3>
 		<pre><code data-trim>object Pasquale {
@@ -736,7 +735,7 @@ Pasquale.serve
 Pasquale.receivePayment(tip = 3)
 </pre></code>
 <ul>
-	<li>a implicit parameter has nothing special, if you pass it to method</li>
+	<li>an implicit parameter has nothing special, if you pass it to method</li>
 	<li>if it's not provided, compiler will try to find one in scope</li>
 	<li>if none in scope or more that one, won't compile</li>
 	<li>resolution rules are not so easy, it worth a talk (and actually there's one)</li>
@@ -771,7 +770,7 @@ Pasquale.receivePayment(tip = 3)
 								<section style="text-align: left;">
 									<h2>The end</h2>
 									<p>Q & Option[A]</p>
-									<p>Thanks for following, slides and code on <a https://github.com/giampaolotrapasso/>https://github.com/giampaolotrapasso/</p>, Twitter or LinkedIn
+									<p>Thanks for following, slides and code on <a https://github.com/giampaolotrapasso/>https://github.com/giampaolotrapasso/</a>, Twitter or LinkedIn</p>
 								</section>
 							</section>
 
