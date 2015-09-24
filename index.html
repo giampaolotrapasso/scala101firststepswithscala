@@ -649,7 +649,8 @@ val order = 4 margherita</code></pre>
 </section>
 <section>
 	<h3>A Pizza DSL</h3>
-<pre><code data-trim>val pizza = Margherita
+<pre><code data-trim>val order = 4 margherita
+val pizza = order(0)  // order head
 Pino commentPizza pizza
 Oven cook pizza
 pizza / 6
