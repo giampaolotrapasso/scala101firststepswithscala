@@ -642,14 +642,11 @@ val hugeOrder2 = hugeOrder.map(t => t.swap)
 <pre><code data-trim>implicit def fromIntToMargherita(n: Int) = new MargheritaList(n)</code></pre>
 <p>compiler implicity does conversion for us</p>
 <pre><code data-trim>val order = 4.margherita</code></pre>
-<p>or better</p>
-<pre><code data-trim>
-val order = 4 margherita</code></pre>
-<p><small>Hint: use <code>import scala.language.implicitConversions</code> and <code>import scala.language.postfixOps</code> to get rid of warning or to raise attention</small></p>
+<p><small>Hint: use <code>import scala.language.implicitConversions</code> to get rid of warning or to raise attention</small></p>
 </section>
 <section>
 	<h3>A Pizza DSL</h3>
-<pre><code data-trim>val order = 4 margherita
+<pre><code data-trim>val order = 4.margherita 
 val pizza = order(0)  // order head
 Pino commentPizza pizza
 Oven cook pizza
