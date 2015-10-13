@@ -68,7 +68,7 @@
 										first steps with Scala</h2>
 							
 									<p>
-										Treviso Scala Group - 24th september 2015
+										CoseNonJaviste - 14th october 2015
 									</p>
 								</section>
 							 <section>
@@ -76,7 +76,7 @@
 							  <p>Giampaolo Trapasso</p>
 							  <p></p>
 							  <p><a href="http://twitter.com/supergiampaolo">@supergiampaolo</a> <br/><small>(there aren't enough heros these days!)</small></p>
-							   <p><a href="http://www.cosenonjaviste.it">cosenonjaviste.it</a> <br/><small>(ask for a sticker!)</small></p>
+							   <p><a href="http://www.cosenonjaviste.it">cosenonjaviste.it</a> <br/><small>(Java, Scala, Android, Javascript, HTML5 and much more!)</small></p>
 							   <p><a href="http://blogzinga.it">blogzinga.it</a><br/><small>(have a blog? do a PR!)</small></p>
 						     </section>
 						
@@ -134,14 +134,7 @@
 						            <!--section>   
 										<p>https://youtu.be/DJLDF6qZUX0</p>            
 						                <iframe width="720" height="540" src="http://www.youtube.com/embed/DJLDF6qZUX0"></iframe>
-									</section>
-				                	<section>
-										<h3>A Brief, Incomplete, and Mostly Wrong History of Programming Languages</h3>
-										<blockquote cite="http://james-iry.blogspot.it/2009/05/brief-incomplete-and-mostly-wrong.html">
-												2003 - A drunken Martin Odersky sees a Reese's Peanut Butter Cup ad featuring somebody's peanut butter getting on somebody else's chocolate and has an idea. He creates Scala, a language that unifies constructs from both object oriented and functional languages. This pisses off both groups and each promptly declares jihad.
-										</blockquote>
-									</section-->
-							
+									</section-->							
 									<section>	
 									   <h3>Scala -  <b>Sca</b>lable <b>La</b>nguage</h3>
 											<ul>
@@ -159,6 +152,12 @@
 						 					<p>Tre cose JVM, JDK+Librerie+Linguaggio (il più debole)</p>
 			 							</aside>
 						 			</section>
+						 			<section>
+										<h3>A Brief, Incomplete, and Mostly Wrong History of Programming Languages</h3>
+										<blockquote cite="http://james-iry.blogspot.it/2009/05/brief-incomplete-and-mostly-wrong.html">
+												2003 - A drunken Martin Odersky sees a Reese's Peanut Butter Cup ad featuring somebody's peanut butter getting on somebody else's chocolate and has an idea. He creates Scala, a language that unifies constructs from both object oriented and functional languages. This pisses off both groups and each promptly declares jihad.
+										</blockquote>
+									</section>
 									<section>	
 										<h3>Another hipster stuff?</h3>
 										<ul>
@@ -173,6 +172,7 @@
 											<li>Lambdacon (Bologna) ~ 280 dev</li>
 											<li>Scala Italy (Milano) ~ 150 + 70</li>
 											<li>Milano Scala Group ~ 570</li>
+											<li>Treviso Scala Group ~ 70</li>
 											<li>Torino Scala Programming and Big Data Meetup ~ 200</li>
 											<li>G+ Community ~ 90</li>
 										</ul>
@@ -475,7 +475,8 @@ trait Waiter {
   def greet = "How can I serve you?"
 }
 
-class Handyman(override val name: String, val wage: Int) extends Worker(name) with  Waiter with PizzaMaker  {
+class Handyman(override val name: String, val wage: Int) 
+     extends Worker(name) with  Waiter with PizzaMaker  {
   override def greet = super[Waiter].greet
 }</code></pre>
 		</section>
@@ -679,7 +680,8 @@ val slices = order.flatMap(p => p.slice(4)) // List[Slice]
 val descriptions = listOfSlices.map(slice => slice.toString)
 </code></pre>
 <p>or</p>
-<pre><code data-trim>val descriptions = order.flatMap(p => p.slice(4)).map(slice => slice.toString)</code></pre>
+<pre><code data-trim>val descriptions = order.flatMap(p => p.slice(4))
+	                 .map(slice => slice.toString)</code></pre>
 </section>
 <section>
 	<h3>For comprehension/III</h3>
@@ -688,7 +690,8 @@ val descriptions = listOfSlices.map(slice => slice.toString)
                          slice <- pizza.slice(4)
                        } yield slice.toString</code></pre>
                             <p>than</p>
-    <pre><code data-trim>val descriptions = order.flatMap(p => p.slice(4)).map(slice => slice.toString)</code></pre>
+    <pre><code data-trim>val descriptions = order.flatMap(pizza => pizza.slice(4))
+    	                .map(slice => slice.toString)</code></pre>
 <ul>
   <li>for comprehension is different from for loop (no <code>yield</code>)
   	<li>is purely syntactic sugar</li>
